@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import CartSection from "../components/cartSection";
 import ReactPixel from 'react-facebook-pixel';
+import CartSection from "../components/CartSection";
 
 const Checkout = () => {
   const { cart, totalPrice, setCart } = useContext(CartContext);
