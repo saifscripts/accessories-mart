@@ -50,6 +50,21 @@ export const CartProvider = ({ children }) => {
                     item_price: product.selling_price
                 }]
             });
+
+
+            window.dataLayer.push({
+                event: "add_to_cart",
+                ecommerce: {
+                  items: [{
+                    item_id: product.id,
+                    item_name: product.product_name,
+                    price: product.selling_price,
+                    item_category: product.select_category,
+                    quantity: existingProduct ? existingProduct.quantity + 1 : 1
+                  }]
+                }
+              });
+              
         }
 
         setCart(updatedCart);

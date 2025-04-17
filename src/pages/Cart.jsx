@@ -18,9 +18,11 @@ const Cart = () => {
 
 
   useEffect(() => {
-    
+
 
     if (cart.length > 0) {
+
+
       ReactPixel.track('InitiateCheckout', {
         content_ids: cart.map(item => item.id),
         contents: cart.map(item => ({
@@ -33,7 +35,44 @@ const Cart = () => {
         currency: 'BDT',
         num_items: cart.length
       });
+
     }
+
+
+    // Meta Pixel ViewCart
+    ReactPixel.track('ViewCart', {
+      content_ids: cart.map(item => item.id),
+      contents: cart.map(item => ({
+        id: item.id,
+        quantity: item.quantity,
+        item_price: item.selling_price
+      })),
+      content_type: 'product',
+      value: totalPrice,
+      currency: 'BDT',
+      num_items: cart.length
+    });
+
+    // Google Analytics view_cart
+    window.dataLayer.push({
+      event: "view_cart",
+      ecommerce: {
+        items: cart.map(item => ({
+          item_id: item.id,
+          item_name: item.product_name,
+          price: item.selling_price,
+          item_category: item.select_category,
+          quantity: item.quantity
+        })),
+        value: totalPrice,
+        currency: "BDT"
+      }
+    });
+
+
+
+
+
   }, [cart]);
 
 

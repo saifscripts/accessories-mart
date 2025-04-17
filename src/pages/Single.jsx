@@ -32,6 +32,21 @@ const Single = () => {
         currency: 'BDT',
         content_category: data.select_category
       });
+
+      // Google Analytics view_item
+      window.dataLayer.push({
+        event: "view_item",
+        ecommerce: {
+          items: [{
+            item_id: data.id,
+            item_name: data.product_name,
+            price: data.selling_price,
+            item_category: data.select_category,
+            quantity: 1
+          }]
+        }
+      });
+
     }
   }, [data]);
 
@@ -133,6 +148,20 @@ const Single = () => {
       }]
     });
 
+    // Google Analytics add_to_cart
+    window.dataLayer.push({
+      event: "add_to_cart",
+      ecommerce: {
+        items: [{
+          item_id: data.id,
+          item_name: data.product_name,
+          price: data.selling_price,
+          item_category: data.select_category,
+          quantity: 1
+        }]
+      }
+    });
+
     addToCart(data, selectedColor?.code || null);
     setIsCartOpen(!isCartOpen);
   };
@@ -156,6 +185,20 @@ const Single = () => {
         item_price: data.selling_price
       }],
       num_items: 1
+    });
+
+    // Google Analytics begin_checkout
+    window.dataLayer.push({
+      event: "begin_checkout",
+      ecommerce: {
+        items: [{
+          item_id: data.id,
+          item_name: data.product_name,
+          price: data.selling_price,
+          item_category: data.select_category,
+          quantity: 1
+        }]
+      }
     });
 
     orderNow(data, selectedColor?.code || null);

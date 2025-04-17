@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import ReactPixel from 'react-facebook-pixel';
 import CartSection from "../components/CartSection";
+// import { sha256 } from '../utils/hash';
 
 const Checkout = () => {
   const { cart, totalPrice, setCart } = useContext(CartContext);
@@ -31,7 +32,9 @@ const Checkout = () => {
 
   // Track ViewCart event when component mounts
   useEffect(() => {
+    
     if (cart.length > 0) {
+      // Meta Pixel ViewCart
       ReactPixel.track('ViewCart', {
         content_ids: cart.map(item => item.id),
         contents: cart.map(item => ({
@@ -43,6 +46,22 @@ const Checkout = () => {
         value: totalPrice,
         currency: 'BDT',
         num_items: cart.length
+      });
+
+      // Google Analytics view_cart
+      window.dataLayer.push({
+        event: "view_cart",
+        ecommerce: {
+          items: cart.map(item => ({
+            item_id: item.id,
+            item_name: item.product_name,
+            price: item.selling_price,
+            item_category: item.select_category,
+            quantity: item.quantity
+          })),
+          value: totalPrice,
+          currency: "BDT"
+        }
       });
     }
     generateRandomText();
@@ -85,10 +104,15 @@ const Checkout = () => {
  
     const productDetails = JSON.parse(localStorage.getItem("cart")) || [];
     const deliveryCharge = calculateDeliveryCharge(formData.deliveryArea);
-    const areaName =
-      formData.deliveryArea === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে";
+    const totalValue = totalPrice + deliveryCharge;
+    const areaName = formData.deliveryArea === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে";
 
-    const phone = getUser ? orderData?.phone || formData.phone : formData.phone;
+    // Get user data (logged in or guest)
+    const userEmail = getUser ? getUser.email : formData?.email;
+    const userName = getUser ? getUser.displayName : formData.name;
+    const userPhone = getUser ? orderData?.phone || formData.phone : formData.phone;
+
+    const phone = userPhone;
 
     if (!validateBangladeshiPhoneNumber(phone)) {
       toast.error(
@@ -97,10 +121,7 @@ const Checkout = () => {
       return;
     }
 
-    if (
-      !getUser &&
-      (!formData.name || !formData.address || !formData.phone)
-    ) {
+    if (!getUser && (!formData.name || !formData.address || !formData.phone)) {
       toast.error("Please fill out all required fields.");
       return;
     }
@@ -110,19 +131,23 @@ const Checkout = () => {
       cart: productDetails,
       name: formData.name,
       client_order_id: randomId,
-      email: getUser ? getUser.email : formData?.email,
-      address: `${
-        getUser ? orderData?.address || formData.address : formData.address
-      }, ${areaName}`,
-      phone: getUser ? orderData?.phone || formData.phone : formData.phone,
-      total_price: totalPrice + deliveryCharge,
+      email: userEmail,
+      address: `${getUser ? orderData?.address || formData.address : formData.address}, ${areaName}`,
+      phone: phone,
+      total_price: totalValue,
       p_method: "Cash On Delivery",
     };
 
     try {
-      // Track Purchase event before making the API call
+      // Prepare hashed user data
+      const hashedEmail = userEmail ? await sha256(userEmail.toLowerCase()) : undefined;
+      const hashedPhone = userPhone ? await sha256(userPhone) : undefined;
+      const hashedName = userName ? await sha256(userName.toLowerCase()) : undefined;
+      const hashedUserId = getUser?.uid ? await sha256(getUser.uid) : undefined;
+
+      // Meta Pixel Purchase with user data
       ReactPixel.track('Purchase', {
-        value: totalPrice + deliveryCharge,
+        value: totalValue,
         currency: 'BDT',
         content_ids: productDetails.map(item => item.id),
         contents: productDetails.map(item => ({
@@ -131,12 +156,48 @@ const Checkout = () => {
           item_price: item.selling_price
         })),
         content_type: 'product',
-        order_id: randomId
+        order_id: randomId,
+        em: hashedEmail,
+        ph: hashedPhone,
+        fn: hashedName,
+        external_id: hashedUserId
+      });
+
+      // Google Analytics Purchase with user data
+      window.dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: randomId,
+          value: totalValue,
+          tax: 0,
+          shipping: deliveryCharge,
+          currency: "BDT",
+          items: productDetails.map(item => ({
+            item_id: item.id,
+            item_name: item.product_name,
+            price: item.selling_price,
+            item_category: item.select_category,
+            quantity: item.quantity
+          })),
+          user_data: {
+            email_address: hashedEmail,
+            phone_number: hashedPhone,
+            address: {
+              first_name: hashedName
+            }
+          }
+        }
       });
 
       // Track CompleteRegistration for guest checkout
       if (!getUser) {
         ReactPixel.track('CompleteRegistration');
+        
+        // Google Analytics for guest registration
+        window.dataLayer.push({
+          event: "sign_up",
+          method: "guest_checkout"
+        });
       }
 
       const response = await fetch(`${BASE_URL}/order/add`, {
@@ -159,8 +220,7 @@ const Checkout = () => {
             order_id: randomId,
           };
 
-          const guestOrders =
-            JSON.parse(localStorage.getItem("guestOrders")) || [];
+          const guestOrders = JSON.parse(localStorage.getItem("guestOrders")) || [];
           guestOrders.push(guestOrderWithDate);
           localStorage.setItem("guestOrders", JSON.stringify(guestOrders));
         }
@@ -375,3 +435,17 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+
+
+async function sha256(message) {
+  // Encode as UTF-8
+  const msgBuffer = new TextEncoder().encode(message);
+  
+  // Hash the message
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  
+  // Convert to hex string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
