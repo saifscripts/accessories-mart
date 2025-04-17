@@ -10,10 +10,10 @@ const ProductSection = ({ loading, data, className }) => {
   const { isCartOpen, setIsCartOpen } = useOutletContext();
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
   const [cartItems, setCartItems] = useState(new Set());
-  const { 
-    addToCart, 
-    orderNow, 
-    cart, 
+  const {
+    addToCart,
+    orderNow,
+    cart,
   } = useContext(CartContext);
   const [selectedColors, setSelectedColors] = useState({});
   const [quantities, setQuantities] = useState({});
@@ -51,7 +51,7 @@ const ProductSection = ({ loading, data, className }) => {
     if (data) {
       const initialColors = {};
       const initialQuantities = {};
-      
+
       data.forEach((item) => {
         const colors = processProductColors(item);
         if (colors.length > 0) {
@@ -59,7 +59,7 @@ const ProductSection = ({ loading, data, className }) => {
         }
         initialQuantities[item.id] = 1;
       });
-      
+
       setSelectedColors(initialColors);
       setQuantities(initialQuantities);
     }
@@ -69,7 +69,7 @@ const ProductSection = ({ loading, data, className }) => {
   useEffect(() => {
     const cartItemIds = new Set(cart.map((item) => item.id));
     setCartItems(cartItemIds);
-    
+
     // Update quantities from cart
     const newQuantities = {};
     cart.forEach(item => {
@@ -86,35 +86,51 @@ const ProductSection = ({ loading, data, className }) => {
     }));
   };
 
+  const pushordernow = (data) => {
+    // Google Analytics begin_checkout
+    window.dataLayer.push({
+      event: "begin_checkout",
+      ecommerce: {
+        items: [{
+          item_id: data.id,
+          item_name: data.product_name,
+          price: data.selling_price,
+          item_category: data.select_category,
+          quantity: 1
+        }]
+      }
+    });
+  }
+
 
   // Enhanced cart handlers with color validation
-/*   const handleAddToCart = (item) => {
-    const colors = processProductColors(item);
-    if (colors.length > 0 && !selectedColors[item.id]) {
-      alert("Please select a color first");
-      return;
-    }
-    
-    addToCart({
-      ...item,
-      selectedColor: selectedColors[item.id] || null,
-      quantity: quantities[item.id] || 1
-    });
-    setIsCartOpen(!isCartOpen);
-  }; */
+  /*   const handleAddToCart = (item) => {
+      const colors = processProductColors(item);
+      if (colors.length > 0 && !selectedColors[item.id]) {
+        alert("Please select a color first");
+        return;
+      }
+      
+      addToCart({
+        ...item,
+        selectedColor: selectedColors[item.id] || null,
+        quantity: quantities[item.id] || 1
+      });
+      setIsCartOpen(!isCartOpen);
+    }; */
 
-/*   const handleOrderNow = (item) => {
-    const colors = processProductColors(item);
-    if (colors.length > 0 && !selectedColors[item.id]) {
-      alert("Please select a color first");
-      return;
-    }
-    orderNow({
-      ...item,
-      selectedColor: selectedColors[item.id] || null,
-      quantity: quantities[item.id] || 1
-    });
-  }; */
+  /*   const handleOrderNow = (item) => {
+      const colors = processProductColors(item);
+      if (colors.length > 0 && !selectedColors[item.id]) {
+        alert("Please select a color first");
+        return;
+      }
+      orderNow({
+        ...item,
+        selectedColor: selectedColors[item.id] || null,
+        quantity: quantities[item.id] || 1
+      });
+    }; */
   console.log(selectedColors);
 
   const formatUrl = (str) => {
@@ -157,7 +173,7 @@ const ProductSection = ({ loading, data, className }) => {
                       alt={item.product_name}
                     />
                   </Link>
-                  
+
                   <Link to={`/product/${item.id}/${formatUrl(item.product_name)}`}>
                     <h3 className="text-lg font-semibold text-gray-800 mt-4">
                       {item.product_name?.substring(0, 27) || "No Name Available"}
@@ -177,11 +193,10 @@ const ProductSection = ({ loading, data, className }) => {
                           <button
                             key={index}
                             onClick={() => handleColorSelect(item.id, color.code)}
-                            className={`w-6 h-6 rounded border-2 cursor-pointer ${
-                              selectedColors[item.id] === color.code
+                            className={`w-6 h-6 rounded border-2 cursor-pointer ${selectedColors[item.id] === color.code
                                 ? "border-gray-400"
                                 : "border-gray-300"
-                            }`}
+                              }`}
                             style={{ backgroundColor: color.code }}
                             title={color.name}
                           />
@@ -204,7 +219,7 @@ const ProductSection = ({ loading, data, className }) => {
                       </div>
                     ) : (
                       <button
-                        onClick={() => {addToCart(item, selectedColors[item.id]); setIsCartOpen(!isCartOpen)}}
+                        onClick={() => { addToCart(item, selectedColors[item.id]); setIsCartOpen(!isCartOpen) }}
                         className="bg-black text-white font-bold py-2 px-4 rounded-md hover:bg-[#313131] hover:text-white transition duration-300 cursor-pointer text-center"
                       >
                         কার্টে রাখুন
@@ -212,7 +227,7 @@ const ProductSection = ({ loading, data, className }) => {
                     )}
 
                     <button
-                      onClick={() => orderNow(item, selectedColors[item.id])}
+                      onClick={() => { orderNow(item, selectedColors[item.id]); pushordernow(item) }}
                       className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-[#ffff00] hover:text-black transition duration-300 cursor-pointer"
                     >
                       অর্ডার করুন

@@ -149,7 +149,7 @@ const Single = () => {
     });
 
     // Google Analytics add_to_cart
-    window.dataLayer.push({
+/*     window.dataLayer.push({
       event: "add_to_cart",
       ecommerce: {
         items: [{
@@ -160,7 +160,7 @@ const Single = () => {
           quantity: 1
         }]
       }
-    });
+    }); */
 
     addToCart(data, selectedColor?.code || null);
     setIsCartOpen(!isCartOpen);

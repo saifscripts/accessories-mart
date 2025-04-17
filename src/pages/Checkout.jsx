@@ -50,7 +50,7 @@ const Checkout = () => {
 
       // Google Analytics view_cart
       window.dataLayer.push({
-        event: "view_cart",
+        event: "begin_checkout",
         ecommerce: {
           items: cart.map(item => ({
             item_id: item.id,
@@ -63,6 +63,8 @@ const Checkout = () => {
           currency: "BDT"
         }
       });
+
+      
     }
     generateRandomText();
   }, []);
