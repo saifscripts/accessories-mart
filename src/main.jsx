@@ -19,6 +19,16 @@ import OrderDtails from "./pages/OrderDtails.jsx";
 import SubCategory from "./pages/SubCategory.jsx";
 import Shop from "./pages/Shop.jsx";
 import MyOrders from "./pages/MyOrders.jsx";
+import ReactPixel from 'react-facebook-pixel';
+const PIXEL_ID = import.meta.env.VITE_API_PIXEL_ID;
+// Initialize Meta Pixel
+const advancedMatching = {}; // optional, for logged in users
+const options = {
+  autoConfig: true,
+  debug: false,
+};
+ReactPixel.init(`${PIXEL_ID}`, advancedMatching, options);
+ReactPixel.pageView(); // Track initial pageview
 
 // Create router configuration using createBrowserRouter
 const router = createBrowserRouter([

@@ -6,6 +6,7 @@ import { CartContext } from "../context/CartContext";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { RiMessengerLine } from "react-icons/ri";
 import { FaCartShopping } from "react-icons/fa6";
+import ReactPixel from 'react-facebook-pixel';
 
 const Single = () => {
   const { id } = useParams();
@@ -19,6 +20,20 @@ const Single = () => {
   const isInCart = cart.some((item) => item.id === data?.id);
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
+
+  /* Track product view when data loads */
+  useEffect(() => {
+    if (data) {
+      ReactPixel.track('ViewContent', {
+        content_ids: [data.id],
+        content_name: data.product_name,
+        content_type: 'product',
+        value: data.selling_price,
+        currency: 'BDT',
+        content_category: data.select_category
+      });
+    }
+  }, [data]);
 
   /* Color handling functions */
   const getColorCode = (colorName) => {
@@ -104,6 +119,20 @@ const Single = () => {
       return;
     }
     
+    // Track AddToCart event
+    ReactPixel.track('AddToCart', {
+      content_ids: [data.id],
+      content_name: data.product_name,
+      content_type: 'product',
+      value: data.selling_price,
+      currency: 'BDT',
+      contents: [{
+        id: data.id,
+        quantity: 1,
+        item_price: data.selling_price
+      }]
+    });
+
     addToCart(data, selectedColor?.code || null);
     setIsCartOpen(!isCartOpen);
   };
@@ -114,6 +143,21 @@ const Single = () => {
       return;
     }
     
+    // Track InitiateCheckout event
+    ReactPixel.track('InitiateCheckout', {
+      content_ids: [data.id],
+      content_name: data.product_name,
+      content_type: 'product',
+      value: data.selling_price,
+      currency: 'BDT',
+      contents: [{
+        id: data.id,
+        quantity: 1,
+        item_price: data.selling_price
+      }],
+      num_items: 1
+    });
+
     orderNow(data, selectedColor?.code || null);
   };
 

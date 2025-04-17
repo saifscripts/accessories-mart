@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import CartSection from "../components/cartSection";
+import ReactPixel from 'react-facebook-pixel';
 
 const Checkout = () => {
-  const { totalPrice, setCart } = useContext(CartContext);
+  const { cart, totalPrice, setCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     deliveryArea: "outside", // Default to outside Dhaka
@@ -15,6 +17,36 @@ const Checkout = () => {
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(true);
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  // Generate random order ID
+  const [randomId, setRandomId] = useState('');
+  const generateRandomText = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 5; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setRandomId(result);
+  }
+
+  // Track ViewCart event when component mounts
+  useEffect(() => {
+    if (cart.length > 0) {
+      ReactPixel.track('ViewCart', {
+        content_ids: cart.map(item => item.id),
+        contents: cart.map(item => ({
+          id: item.id,
+          quantity: item.quantity,
+          item_price: item.selling_price
+        })),
+        content_type: 'product',
+        value: totalPrice,
+        currency: 'BDT',
+        num_items: cart.length
+      });
+    }
+    generateRandomText();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,15 +63,14 @@ const Checkout = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     setGetUser(user?.user);
-    generateRandomText();
   }, []);
 
   const validateBangladeshiPhoneNumber = (phone) => {
     const regex = /^(?:\+8801|01)\d{9}$/;
     return regex.test(phone);
   };
-  /* guest use extra functions------------------- */
 
+  // Format date for guest orders
   const formatDate = (date) => {
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -48,22 +79,6 @@ const Checkout = () => {
     });
   };
   const currentDate = formatDate(new Date());
-  
-/*  */
-const [randomId, setRandomId] = useState('');
-
-const generateRandomText = () => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  
-  for (let i = 0; i < 5; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  
-  setRandomId(result);
-}
-
-  /* --------------- */
 
   const checkOut = async (e) => {
     e.preventDefault();
@@ -84,30 +99,17 @@ const generateRandomText = () => {
 
     if (
       !getUser &&
-      (!formData.name ||
-        // !formData.email ||
-        !formData.address ||
-        !formData.phone)
+      (!formData.name || !formData.address || !formData.phone)
     ) {
       toast.error("Please fill out all required fields.");
       return;
     }
 
-    /*     if (!getUser) {
-      const confirmCheckout = window.confirm(
-        "\nDo you want to order without an account?\n"
-      );
-
-      if (!confirmCheckout) {
-        return;
-      }
-    } */
-
     const order = {
       user_id: getUser ? getUser.uid : null,
       cart: productDetails,
       name: formData.name,
-      client_order_id :randomId,
+      client_order_id: randomId,
       email: getUser ? getUser.email : formData?.email,
       address: `${
         getUser ? orderData?.address || formData.address : formData.address
@@ -118,6 +120,25 @@ const generateRandomText = () => {
     };
 
     try {
+      // Track Purchase event before making the API call
+      ReactPixel.track('Purchase', {
+        value: totalPrice + deliveryCharge,
+        currency: 'BDT',
+        content_ids: productDetails.map(item => item.id),
+        contents: productDetails.map(item => ({
+          id: item.id,
+          quantity: item.quantity,
+          item_price: item.selling_price
+        })),
+        content_type: 'product',
+        order_id: randomId
+      });
+
+      // Track CompleteRegistration for guest checkout
+      if (!getUser) {
+        ReactPixel.track('CompleteRegistration');
+      }
+
       const response = await fetch(`${BASE_URL}/order/add`, {
         method: "POST",
         headers: {
@@ -135,7 +156,7 @@ const generateRandomText = () => {
           const guestOrderWithDate = {
             ...order,
             created_at: currentDate,
-            order_id :randomId, // Add current date to the order
+            order_id: randomId,
           };
 
           const guestOrders =
@@ -156,8 +177,6 @@ const generateRandomText = () => {
       toast.error("Failed to place your order, please try again later.");
     }
   };
-
-  // ... rest of your existing code (loadData, useEffect, etc.)
 
   return (
     <>
@@ -308,12 +327,9 @@ const generateRandomText = () => {
                   </p>
                 </div>
               </div>
-
-              {/* Payment section remains the same */}
-              {/* ... */}
             </div>
 
-            {/* Sub Total */}
+            {/* Order Summary */}
             <div className="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:min-w-full xl:max-w-md rounded-lg border border-gray-200 p-5">
               <div className="flow-root">
                 <CartSection />

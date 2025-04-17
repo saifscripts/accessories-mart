@@ -105,7 +105,7 @@ const OrderSuccess = () => {
                 to="/account"
                 class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none bg-[#2a59ff]"
               >
-                Track your order
+                আপনার অর্ডার ট্র্যাক করুন
               </Link>
             ) : (
               <Link

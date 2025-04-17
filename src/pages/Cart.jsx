@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import Alert from "../components/Alert";
 import { FaPlus } from "react-icons/fa";
-
+import ReactPixel from 'react-facebook-pixel';
 const Cart = () => {
+
   const {
     cart,
     totalPrice,
@@ -13,7 +14,34 @@ const Cart = () => {
     removeFromCart,
   } = useContext(CartContext);
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
-  console.log(cart);
+
+
+
+  useEffect(() => {
+    
+
+    if (cart.length > 0) {
+      ReactPixel.track('InitiateCheckout', {
+        content_ids: cart.map(item => item.id),
+        contents: cart.map(item => ({
+          id: item.id,
+          quantity: item.quantity,
+          item_price: item.selling_price
+        })),
+        content_type: 'product',
+        value: cart.reduce((sum, item) => sum + (item.selling_price * item.quantity), 0),
+        currency: 'BDT',
+        num_items: cart.length
+      });
+    }
+  }, [cart]);
+
+
+
+
+
+
+  // console.log(cart);
   return (
     <section className="bg-white py-8 antialiased md:py-16 lg:px-10">
       {cart.length === 0 ? (

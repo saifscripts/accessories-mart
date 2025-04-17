@@ -1,8 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
-export const CartContext = createContext(); // ✅ Export Context
+import ReactPixel from 'react-facebook-pixel';
+export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
@@ -33,11 +34,22 @@ export const CartProvider = ({ children }) => {
         const existingProduct = updatedCart.find(item => item.id === product.id);
         if (existingProduct) {
             existingProduct.quantity += 1;
-            // toast.success("Cart Updated!");
         } else {
             updatedCart.push({ ...product, quantity: 1, selectedColor });
             
-            // toast.success("Product added to cart!");
+            // Track AddToCart event
+            ReactPixel.track('AddToCart', {
+                content_ids: [product.id],
+                content_name: product.name,
+                content_type: 'product',
+                value: product.selling_price,
+                currency: 'BDT',
+                contents: [{
+                    id: product.id,
+                    quantity: 1,
+                    item_price: product.selling_price
+                }]
+            });
         }
 
         setCart(updatedCart);
