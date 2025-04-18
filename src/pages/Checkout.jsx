@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import ReactPixel from 'react-facebook-pixel';
+// import ReactPixel from 'react-facebook-pixel';
 import CartSection from "../components/CartSection";
 // import { sha256 } from '../utils/hash';
 
@@ -35,18 +35,18 @@ const Checkout = () => {
     
     if (cart.length > 0) {
       // Meta Pixel ViewCart
-      ReactPixel.track('ViewCart', {
-        content_ids: cart.map(item => item.id),
-        contents: cart.map(item => ({
-          id: item.id,
-          quantity: item.quantity,
-          item_price: item.selling_price
-        })),
-        content_type: 'product',
-        value: totalPrice,
-        currency: 'BDT',
-        num_items: cart.length
-      });
+      // ReactPixel.track('ViewCart', {
+      //   content_ids: cart.map(item => item.id),
+      //   contents: cart.map(item => ({
+      //     id: item.id,
+      //     quantity: item.quantity,
+      //     item_price: item.selling_price
+      //   })),
+      //   content_type: 'product',
+      //   value: totalPrice,
+      //   currency: 'BDT',
+      //   num_items: cart.length
+      // });
 
       // Google Analytics view_cart
       window.dataLayer.push({
@@ -148,22 +148,22 @@ const Checkout = () => {
       const hashedUserId = getUser?.uid ? await sha256(getUser.uid) : undefined;
 
       // Meta Pixel Purchase with user data
-      ReactPixel.track('Purchase', {
-        value: totalValue,
-        currency: 'BDT',
-        content_ids: productDetails.map(item => item.id),
-        contents: productDetails.map(item => ({
-          id: item.id,
-          quantity: item.quantity,
-          item_price: item.selling_price
-        })),
-        content_type: 'product',
-        order_id: randomId,
-        em: hashedEmail,
-        ph: hashedPhone,
-        fn: hashedName,
-        external_id: hashedUserId
-      });
+      // ReactPixel.track('Purchase', {
+      //   value: totalValue,
+      //   currency: 'BDT',
+      //   content_ids: productDetails.map(item => item.id),
+      //   contents: productDetails.map(item => ({
+      //     id: item.id,
+      //     quantity: item.quantity,
+      //     item_price: item.selling_price
+      //   })),
+      //   content_type: 'product',
+      //   order_id: randomId,
+      //   em: hashedEmail,
+      //   ph: hashedPhone,
+      //   fn: hashedName,
+      //   external_id: hashedUserId
+      // });
 
       // Google Analytics Purchase with user data
       window.dataLayer.push({
@@ -193,7 +193,7 @@ const Checkout = () => {
 
       // Track CompleteRegistration for guest checkout
       if (!getUser) {
-        ReactPixel.track('CompleteRegistration');
+        // ReactPixel.track('CompleteRegistration');
         
         // Google Analytics for guest registration
         window.dataLayer.push({

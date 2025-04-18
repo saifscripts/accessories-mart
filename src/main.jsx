@@ -21,7 +21,7 @@ import Shop from "./pages/Shop.jsx";
 import MyOrders from "./pages/MyOrders.jsx";
 import ReactPixel from 'react-facebook-pixel';
 
-const PIXEL_ID = import.meta.env.VITE_API_PIXEL_ID;
+// const PIXEL_ID = import.meta.env.VITE_API_PIXEL_ID;
 const GTM_ID = import.meta.env.VITE_API_GTM_ID;
 
 // Initialize Google Tag Manager Data Layer
@@ -37,13 +37,13 @@ const GTM_ID = import.meta.env.VITE_API_GTM_ID;
 })(window, document, 'script', 'dataLayer', `${GTM_ID}`); 
 
 // Initialize Meta Pixel
-const advancedMatching = {}; // optional, for logged in users
+/* const advancedMatching = {};
 const options = {
   autoConfig: true,
   debug: false,
 };
 ReactPixel.init(PIXEL_ID, advancedMatching, options);
-ReactPixel.pageView(); // Track initial pageview
+ReactPixel.pageView();  */
 
 // Create router configuration using createBrowserRouter
 const router = createBrowserRouter([

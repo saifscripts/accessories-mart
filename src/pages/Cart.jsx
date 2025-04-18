@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import Alert from "../components/Alert";
 import { FaPlus } from "react-icons/fa";
-import ReactPixel from 'react-facebook-pixel';
+// import ReactPixel from 'react-facebook-pixel';
 const Cart = () => {
 
   const {
@@ -20,27 +21,27 @@ const Cart = () => {
   useEffect(() => {
 
 
-    if (cart.length > 0) {
+    // if (cart.length > 0) {
 
 
-      ReactPixel.track('InitiateCheckout', {
-        content_ids: cart.map(item => item.id),
-        contents: cart.map(item => ({
-          id: item.id,
-          quantity: item.quantity,
-          item_price: item.selling_price
-        })),
-        content_type: 'product',
-        value: cart.reduce((sum, item) => sum + (item.selling_price * item.quantity), 0),
-        currency: 'BDT',
-        num_items: cart.length
-      });
+    //   ReactPixel.track('InitiateCheckout', {
+    //     content_ids: cart.map(item => item.id),
+    //     contents: cart.map(item => ({
+    //       id: item.id,
+    //       quantity: item.quantity,
+    //       item_price: item.selling_price
+    //     })),
+    //     content_type: 'product',
+    //     value: cart.reduce((sum, item) => sum + (item.selling_price * item.quantity), 0),
+    //     currency: 'BDT',
+    //     num_items: cart.length
+    //   });
 
-    }
+    // }
 
 
     // Meta Pixel ViewCart
-    ReactPixel.track('ViewCart', {
+    /* ReactPixel.track('ViewCart', {
       content_ids: cart.map(item => item.id),
       contents: cart.map(item => ({
         id: item.id,
@@ -51,7 +52,7 @@ const Cart = () => {
       value: totalPrice,
       currency: 'BDT',
       num_items: cart.length
-    });
+    }); */
 
     // Google Analytics view_cart
     window.dataLayer.push({

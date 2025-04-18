@@ -86,21 +86,20 @@ const ProductSection = ({ loading, data, className }) => {
     }));
   };
 
-  const pushordernow = (data) => {
-    // Google Analytics begin_checkout
-    window.dataLayer.push({
-      event: "begin_checkout",
-      ecommerce: {
-        items: [{
-          item_id: data.id,
-          item_name: data.product_name,
-          price: data.selling_price,
-          item_category: data.select_category,
-          quantity: 1
-        }]
-      }
-    });
-  }
+  /*   const pushordernow = (data) => {
+      window.dataLayer.push({
+        event: "begin_checkout",
+        ecommerce: {
+          items: [{
+            item_id: data.id,
+            item_name: data.product_name,
+            price: data.selling_price,
+            item_category: data.select_category,
+            quantity: 1
+          }]
+        }
+      });
+    } */
 
 
   // Enhanced cart handlers with color validation
@@ -194,8 +193,8 @@ const ProductSection = ({ loading, data, className }) => {
                             key={index}
                             onClick={() => handleColorSelect(item.id, color.code)}
                             className={`w-6 h-6 rounded border-2 cursor-pointer ${selectedColors[item.id] === color.code
-                                ? "border-gray-400"
-                                : "border-gray-300"
+                              ? "border-gray-400"
+                              : "border-gray-300"
                               }`}
                             style={{ backgroundColor: color.code }}
                             title={color.name}
@@ -227,7 +226,7 @@ const ProductSection = ({ loading, data, className }) => {
                     )}
 
                     <button
-                      onClick={() => { orderNow(item, selectedColors[item.id]); pushordernow(item) }}
+                      onClick={() => orderNow(item, selectedColors[item.id])}
                       className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-[#ffff00] hover:text-black transition duration-300 cursor-pointer"
                     >
                       অর্ডার করুন

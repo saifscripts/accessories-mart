@@ -2,7 +2,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import ReactPixel from 'react-facebook-pixel';
+// import ReactPixel from 'react-facebook-pixel';
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -38,7 +38,7 @@ export const CartProvider = ({ children }) => {
             updatedCart.push({ ...product, quantity: 1, selectedColor });
             
             // Track AddToCart event
-            ReactPixel.track('AddToCart', {
+          /*   ReactPixel.track('AddToCart', {
                 content_ids: [product.id],
                 content_name: product.name,
                 content_type: 'product',
@@ -49,7 +49,7 @@ export const CartProvider = ({ children }) => {
                     quantity: 1,
                     item_price: product.selling_price
                 }]
-            });
+            }); */
 
 
             window.dataLayer.push({
