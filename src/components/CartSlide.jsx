@@ -142,7 +142,7 @@ const CartSlide = ({setIsCartOpen, isCartOpen}) => {
                         </svg>
                       </button>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">${item.selling_price} × {item.quantity} = ${(item.selling_price * item.quantity).toFixed(2)}</p>
+                    <p className="text-xs text-gray-500 mt-1">৳{item.selling_price} × {item.quantity} = ৳{(item.selling_price * item.quantity).toFixed(2)}</p>
                   </div>
                 </div>
               );
@@ -172,7 +172,7 @@ const CartSlide = ({setIsCartOpen, isCartOpen}) => {
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Total:</span>
-              <span className="font-semibold">${totalPrice}</span>
+              <span className="font-semibold">৳{totalPrice}</span>
             </div>
             <div className="flex flex-col gap-2">
               <Link

@@ -6,7 +6,7 @@ import { CartContext } from "../context/CartContext";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { RiMessengerLine } from "react-icons/ri";
 import { FaCartShopping } from "react-icons/fa6";
-import ReactPixel from 'react-facebook-pixel';
+// import ReactPixel from 'react-facebook-pixel';
 
 const Single = () => {
   const { id } = useParams();
@@ -23,15 +23,16 @@ const Single = () => {
 
   /* Track product view when data loads */
   useEffect(() => {
+
     if (data) {
-      ReactPixel.track('ViewContent', {
+      /* ReactPixel.track('ViewContent', {
         content_ids: [data.id],
         content_name: data.product_name,
         content_type: 'product',
         value: data.selling_price,
         currency: 'BDT',
         content_category: data.select_category
-      });
+      }); */
 
       // Google Analytics view_item
       window.dataLayer.push({
@@ -135,7 +136,7 @@ const Single = () => {
     }
     
     // Track AddToCart event
-    ReactPixel.track('AddToCart', {
+   /*  ReactPixel.track('AddToCart', {
       content_ids: [data.id],
       content_name: data.product_name,
       content_type: 'product',
@@ -146,7 +147,7 @@ const Single = () => {
         quantity: 1,
         item_price: data.selling_price
       }]
-    });
+    }); */
 
     // Google Analytics add_to_cart
 /*     window.dataLayer.push({
@@ -173,7 +174,7 @@ const Single = () => {
     }
     
     // Track InitiateCheckout event
-    ReactPixel.track('InitiateCheckout', {
+    /* ReactPixel.track('InitiateCheckout', {
       content_ids: [data.id],
       content_name: data.product_name,
       content_type: 'product',
@@ -185,10 +186,10 @@ const Single = () => {
         item_price: data.selling_price
       }],
       num_items: 1
-    });
+    }); */
 
     // Google Analytics begin_checkout
-    window.dataLayer.push({
+    /* window.dataLayer.push({
       event: "begin_checkout",
       ecommerce: {
         items: [{
@@ -199,7 +200,7 @@ const Single = () => {
           quantity: 1
         }]
       }
-    });
+    }); */
 
     orderNow(data, selectedColor?.code || null);
   };
