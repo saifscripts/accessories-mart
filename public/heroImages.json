@@ -1,6 +1,7 @@
 {
-    "images": [
-      "/web image 1.webp",
-      "/web image 2.webp"
-    ]
-  }
+  "images": [
+    "/banner1.webp",
+    "/banner2.webp",
+    "/banner3.webp"
+  ]
+}
