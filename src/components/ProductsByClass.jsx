@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import ProductSection from "./ProductSection";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ProductSection from './ProductSection';
 
 const ProductsByClass = () => {
   const [data, setData] = useState([]);
@@ -14,7 +14,7 @@ const ProductsByClass = () => {
       const result = await response.json();
       setData(result[0]); // Access the array of products from the "0" property
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
@@ -25,19 +25,25 @@ const ProductsByClass = () => {
   }, []);
 
   // Filter products by class
-  const popularProducts = data.filter(product => product.type === "Popular Products");
-  const newArrivalProducts = data.filter(product => product.type === "New Arrival");
-  const trandingProducts = data.filter(product => product.type === "Tranding Product");
+  const popularProducts = data.filter(
+    (product) => product.type === 'Popular Products'
+  );
+  const newArrivalProducts = data.filter(
+    (product) => product.type === 'New Arrival'
+  );
+  const trandingProducts = data.filter(
+    (product) => product.type === 'Tranding Product'
+  );
 
   return (
-    <div style={{ marginTop: "50px" }}>
+    <div style={{ marginTop: '50px' }}>
       <div className="container mx-auto lg:px-8 px-2">
         <div className="mb-4 flex lg:px-10 items-center justify-between gap-4 md:mb-8">
           <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
             Popular Products
           </h2>
           <Link
-            to={"/shop"}
+            to={'/shop'}
             className="flex items-center text-base font-medium text-gray-900 hover:underline"
           >
             See more products
@@ -60,28 +66,28 @@ const ProductsByClass = () => {
             </svg>
           </Link>
         </div>
-        
-        <ProductSection loading={loading} data={popularProducts}/>
+
+        <ProductSection loading={loading} data={popularProducts} />
       </div>
-      
+
       <div className="container mx-auto lg:px-8 px-2 mt-8">
         <div className="mb-4 flex lg:px-10 items-center justify-between gap-4 md:mb-8">
           <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
             New Arrival
           </h2>
         </div>
-        
-        <ProductSection loading={loading} data={newArrivalProducts}/>
+
+        <ProductSection loading={loading} data={newArrivalProducts} />
       </div>
-      
+
       <div className="container mx-auto lg:px-8 px-2 mt-8">
         <div className="mb-4 flex lg:px-10 items-center justify-between gap-4 md:mb-8">
           <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
             Tranding Product
           </h2>
         </div>
-        
-        <ProductSection loading={loading} data={trandingProducts}/>
+
+        <ProductSection loading={loading} data={trandingProducts} />
       </div>
     </div>
   );

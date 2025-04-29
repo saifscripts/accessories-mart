@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap');
 
 body {
-  font-family: "Ubuntu", sans-serif!important;
-  font-family: "Hind Siliguri", sans-serif!important;
+  font-family: 'Ubuntu', sans-serif !important;
+  font-family: 'Hind Siliguri', sans-serif !important;
 }
-
 
 .font-tektur {
   transition-property: opacity, transform;
-  font-family: "gf_Tektur variant0", Tofu;
+  font-family: 'gf_Tektur variant0', Tofu;
   font-weight: 400;
   font-style: normal;
   font-stretch: 100%;
@@ -58,21 +57,20 @@ body {
   }
 }
 
-.checkout-progress::after{
-  background: red!important;
+.checkout-progress::after {
+  background: red !important;
 }
-.sh-add-slider-container img{
-  width: 100%!important;
+.sh-add-slider-container img {
+  width: 100% !important;
 }
-
 
 /*  */
 
 :root {
-    --swiper-theme-color: white !important;
-    --swiper-navigation-size: 50px !important;
+  --swiper-theme-color: white !important;
+  --swiper-navigation-size: 50px !important;
 }
 
-.penthrough{
+.penthrough {
   text-decoration: line-through;
 }

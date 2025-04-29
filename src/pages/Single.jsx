@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useOutletContext, useParams } from "react-router-dom";
-import RelatedProduct from "../components/RelatedProduct";
-import { CartContext } from "../context/CartContext";
-import { IoLogoWhatsapp } from "react-icons/io";
-import { RiMessengerLine } from "react-icons/ri";
-import { FaCartShopping } from "react-icons/fa6";
+import React, { useContext, useEffect, useState } from 'react';
+import { FaCartShopping } from 'react-icons/fa6';
+import { IoLogoWhatsapp } from 'react-icons/io';
+import { RiMessengerLine } from 'react-icons/ri';
+import { Link, useOutletContext, useParams } from 'react-router-dom';
+import RelatedProduct from '../components/RelatedProduct';
+import { CartContext } from '../context/CartContext';
 // import ReactPixel from 'react-facebook-pixel';
 
 const Single = () => {
@@ -23,7 +23,6 @@ const Single = () => {
 
   /* Track product view when data loads */
   useEffect(() => {
-
     if (data) {
       /* ReactPixel.track('ViewContent', {
         content_ids: [data.id],
@@ -36,43 +35,44 @@ const Single = () => {
 
       // Google Analytics view_item
       window.dataLayer.push({
-        event: "view_item",
+        event: 'view_item',
         ecommerce: {
-          items: [{
-            item_id: data.id,
-            item_name: data.product_name,
-            price: data.selling_price,
-            item_category: data.select_category,
-            quantity: 1
-          }]
-        }
+          items: [
+            {
+              item_id: data.id,
+              item_name: data.product_name,
+              price: data.selling_price,
+              item_category: data.select_category,
+              quantity: 1,
+            },
+          ],
+        },
       });
-
     }
   }, [data]);
 
   /* Color handling functions */
   const getColorCode = (colorName) => {
     const colorMap = {
-      yellow: "#FFFF00",
-      blue: "#0000FF",
-      gray: "#808080",
-      red: "#FF0000",
-      green: "#008000",
-      black: "#000000",
-      white: "#FFFFFF",
-      orange: "#FFA500",
-      purple: "#800080",
-      pink: "#FFC0CB",
-      brown: "#A52A2A",
+      yellow: '#FFFF00',
+      blue: '#0000FF',
+      gray: '#808080',
+      red: '#FF0000',
+      green: '#008000',
+      black: '#000000',
+      white: '#FFFFFF',
+      orange: '#FFA500',
+      purple: '#800080',
+      pink: '#FFC0CB',
+      brown: '#A52A2A',
     };
     const normalizedColor = colorName?.toLowerCase().trim();
-    return colorMap[normalizedColor] || "#CCCCCC";
+    return colorMap[normalizedColor] || '#CCCCCC';
   };
 
   // Process colors from data
   const colors = data?.color
-    ? data.color.split(",").map((color) => ({
+    ? data.color.split(',').map((color) => ({
         name: color.trim(),
         code: getColorCode(color.trim()),
       }))
@@ -84,10 +84,10 @@ const Single = () => {
   // Set default color when data loads
   useEffect(() => {
     if (data?.color) {
-      const firstColor = data.color.split(",")[0].trim();
+      const firstColor = data.color.split(',')[0].trim();
       setSelectedColor({
         name: firstColor,
-        code: getColorCode(firstColor)
+        code: getColorCode(firstColor),
       });
     }
   }, [data]);
@@ -104,7 +104,7 @@ const Single = () => {
         loadRelatedProducts(result[0].select_category, result[0].id);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
@@ -122,7 +122,7 @@ const Single = () => {
       );
       setRelatedProducts(filteredProducts);
     } catch (error) {
-      console.error("Error fetching related products:", error);
+      console.error('Error fetching related products:', error);
     } finally {
       setRelatedLoading(false);
     }
@@ -131,12 +131,12 @@ const Single = () => {
   // Handlers for cart actions
   const handleAddToCart = () => {
     if (colors.length > 0 && !selectedColor) {
-      alert("Please select a color first");
+      alert('Please select a color first');
       return;
     }
-    
+
     // Track AddToCart event
-   /*  ReactPixel.track('AddToCart', {
+    /*  ReactPixel.track('AddToCart', {
       content_ids: [data.id],
       content_name: data.product_name,
       content_type: 'product',
@@ -150,7 +150,7 @@ const Single = () => {
     }); */
 
     // Google Analytics add_to_cart
-/*     window.dataLayer.push({
+    /*     window.dataLayer.push({
       event: "add_to_cart",
       ecommerce: {
         items: [{
@@ -169,10 +169,10 @@ const Single = () => {
 
   const handleOrderNow = () => {
     if (colors.length > 0 && !selectedColor) {
-      alert("Please select a color first");
+      alert('Please select a color first');
       return;
     }
-    
+
     // Track InitiateCheckout event
     /* ReactPixel.track('InitiateCheckout', {
       content_ids: [data.id],
@@ -236,7 +236,7 @@ const Single = () => {
                   </div>
                   <div className="flex gap-4">
                     <button
-                      onClick={() => setSelectedImg("")}
+                      onClick={() => setSelectedImg('')}
                       className="w-1/4 h-auto cursor-pointer hover:shadow-sm"
                     >
                       <img
@@ -281,13 +281,15 @@ const Single = () => {
                     </div>
                     <div>
                       <span className="font-bold text-gray-700">
-                        Availability:{" "}
+                        Availability:{' '}
                       </span>
                       <span className="text-gray-600">{data.availability}</span>
                     </div>
                   </div>
                   <div>
-                    <span className="font-bold text-gray-700">Product Description:</span>
+                    <span className="font-bold text-gray-700">
+                      Product Description:
+                    </span>
                     <div className="text-gray-600 text-sm mt-2">
                       {data.p_short_des?.split(',').map((line, index) => (
                         <p key={index} className="mb-1">
@@ -297,33 +299,33 @@ const Single = () => {
                     </div>
                   </div>
                   {colors.length > 0 && (
-                  <div className="mt-4">
-                    <span className="font-bold text-gray-700">
-                      Choose Color:
-                    </span>
-                    <div className="flex gap-2 mt-2">
-                      {colors.map((color, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setSelectedColor(color)}
-                          className={`w-8 h-8 rounded border-2 transition-all ${
-                            selectedColor?.code === color.code
-                              ? "border-black shadow-md"
-                              : "border-gray-300"
-                          } hover:shadow-sm`}
-                          style={{ backgroundColor: color.code }}
-                          title={color.name}
-                          aria-label={`Select color ${color.name}`}
-                        />
-                      ))}
+                    <div className="mt-4">
+                      <span className="font-bold text-gray-700">
+                        Choose Color:
+                      </span>
+                      <div className="flex gap-2 mt-2">
+                        {colors.map((color, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setSelectedColor(color)}
+                            className={`w-8 h-8 rounded border-2 transition-all ${
+                              selectedColor?.code === color.code
+                                ? 'border-black shadow-md'
+                                : 'border-gray-300'
+                            } hover:shadow-sm`}
+                            style={{ backgroundColor: color.code }}
+                            title={color.name}
+                            aria-label={`Select color ${color.name}`}
+                          />
+                        ))}
+                      </div>
+                      {selectedColor && (
+                        <p className="text-sm text-gray-600 mt-1">
+                          Selected: {selectedColor.name}
+                        </p>
+                      )}
                     </div>
-                    {selectedColor && (
-                      <p className="text-sm text-gray-600 mt-1">
-                        Selected: {selectedColor.name}
-                      </p>
-                    )}
-                  </div>
-                )}
+                  )}
                   <div className="flex justify-items-stretch gap-4 lg:-mx-2 mb-4 pt-8">
                     <div className="w-full">
                       {isInCart ? (
@@ -362,14 +364,14 @@ const Single = () => {
                   <div className="w-full flex gap-2">
                     <Link
                       target="_blank"
-                      to="https://wa.me/+8801851003265"
+                      to="https://wa.me/+8801856113876"
                       className="w-full bg-[#25D366] text-white py-2 px-4 font-bold hover:bg-[#25d365d0] cursor-pointer flex gap-2 justify-center items-center transition-colors"
                     >
                       <IoLogoWhatsapp size={25} /> WhatsApp
                     </Link>
                     <Link
                       target="_blank"
-                      to="https://web.facebook.com/messages/t/116061797769426/"
+                      to="https://web.facebook.com/messages/t/100857032923823/"
                       className="w-full bg-[#0863F7] text-white py-2 px-4 font-bold hover:bg-[#0864f7c9] cursor-pointer flex gap-2 justify-center items-center transition-colors"
                     >
                       <RiMessengerLine size={25} /> Messenger

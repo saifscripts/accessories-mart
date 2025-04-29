@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { CartContext } from "../context/CartContext";
-import Loader from "./Loader";
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
+import Loader from './Loader';
 
 const Header = ({ menuopen, setMenuOpen }) => {
   const { cart, user } = useContext(CartContext);
@@ -28,7 +28,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
       });
       setSubCategories(initialSubCategories);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error('Error fetching categories:', error);
     } finally {
       setLoading(false);
     }
@@ -46,7 +46,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
         [categoryName]: result.subcategories || [],
       }));
     } catch (error) {
-      console.error("Error fetching sub-categories:", error);
+      console.error('Error fetching sub-categories:', error);
       setSubCategories((prev) => ({
         ...prev,
         [categoryName]: [],
@@ -56,7 +56,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
   useEffect(() => {
     loadCategories();
-    const guestOrders = JSON.parse(localStorage.getItem("guestOrders")) || [];
+    const guestOrders = JSON.parse(localStorage.getItem('guestOrders')) || [];
     setLocalOrderData(guestOrders);
   }, []);
 
@@ -89,7 +89,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
   return (
     <div
       className="fixed top-0 z-50 w-full"
-      onClick={() => (menuopen ? setMenuOpen(false) : "")}
+      onClick={() => (menuopen ? setMenuOpen(false) : '')}
     >
       <header>
         <div className="bg-black border-b border-gray-900">
@@ -104,16 +104,14 @@ const Header = ({ menuopen, setMenuOpen }) => {
                       alt=""
                     />
                     <div className="flex ">
-                      <h1 className="text-white lg:text-2xl text-lg font-extrabold  uppercase">
-                      ভাই দাম কত ? 
+                      <h1 className="text-white lg:text-2xl text-lg font-extrabold">
+                        Accessories Mart
                       </h1>
                     </div>
                   </Link>
                 </div>
                 {/* Mobile Logo */}
-
               </div>
-
 
               {/* Desktop Navigation */}
               <div className="hidden lg:flex lg:items-center lg:space-x-7">
@@ -123,8 +121,6 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 >
                   Home
                 </Link>
-
-
 
                 {categories.map((category) => {
                   const hasSubCategories =
@@ -146,21 +142,21 @@ const Header = ({ menuopen, setMenuOpen }) => {
                         {category.name}
                         {(subCategories[category.name] === null ||
                           hasSubCategories) && (
-                            <svg
-                              className="w-4 h-4 ml-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 9l-7 7-7-7"
-                              />
-                            </svg>
-                          )}
+                          <svg
+                            className="w-4 h-4 ml-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        )}
                       </Link>
 
                       {isHovered && hasSubCategories && (
@@ -187,7 +183,6 @@ const Header = ({ menuopen, setMenuOpen }) => {
                   Shop
                 </Link>
               </div>
-
 
               {/* Mobile Cart Button */}
               <Link
@@ -303,7 +298,9 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
         {/* Mobile Menu */}
         <nav
-          className={`py-4 bg-gray-900 lg:hidden ${menuopen ? "block" : "hidden"}`}
+          className={`py-4 bg-gray-900 lg:hidden ${
+            menuopen ? 'block' : 'hidden'
+          }`}
         >
           <div className="px-4 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center justify-between">
@@ -362,22 +359,23 @@ const Header = ({ menuopen, setMenuOpen }) => {
                         {category.name}
                         {(subCategories[category.name] === null ||
                           hasSubCategories) && (
-                            <svg
-                              className={`w-4 h-4 text-white transition-transform ${isExpanded ? "transform rotate-180" : ""
-                                }`}
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 9l-7 7-7-7"
-                              />
-                            </svg>
-                          )}
+                          <svg
+                            className={`w-4 h-4 text-white transition-transform ${
+                              isExpanded ? 'transform rotate-180' : ''
+                            }`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        )}
                       </Link>
 
                       {isExpanded && hasSubCategories && (

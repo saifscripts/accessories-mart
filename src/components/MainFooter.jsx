@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
-import bkash from "/bkash.svg";
-import nagad from "/nagad.png";
-import rocket from "/rocket.png";
-import whatsapp from "/WhatsApp.svg.webp";
-import americanexpress from "/americanexpress.png";
-import { Link } from "react-router-dom";
-import { FaFacebookF, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
+import React, { useEffect, useState } from 'react';
+import { FaFacebookF, FaPhoneAlt } from 'react-icons/fa';
+import { FaEnvelope } from 'react-icons/fa6';
+import { IoLogoWhatsapp } from 'react-icons/io';
+import { Link } from 'react-router-dom';
+import americanexpress from '/americanexpress.png';
+import bkash from '/bkash.svg';
+import nagad from '/nagad.png';
+import rocket from '/rocket.png';
+import whatsapp from '/WhatsApp.svg.webp';
 
 const MainFooter = () => {
   // const [menuopen, setMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ const MainFooter = () => {
       const result = await response.json();
       setData(result);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
@@ -39,7 +40,9 @@ const MainFooter = () => {
       <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-y-12 gap-x-8 xl:gap-x-12">
           <div class="col-span-2 md:col-span-4 xl:pr-8">
-            <Link to="/"><img class="w-auto h-14" src="/logo.png" alt="" /></Link>
+            <Link to="/">
+              <img class="w-auto h-14" src="/logo.png" alt="" />
+            </Link>
 
             <p class="text-base leading-relaxed text-gray-200 mt-7">
               Discover the latest tech at Gadgetex – your one-stop shop for
@@ -47,7 +50,7 @@ const MainFooter = () => {
             </p>
 
             <Link
-              to="https://web.facebook.com/messages/t/116061797769426/"
+              to="https://web.facebook.com/messages/t/100857032923823/"
               target="_blank"
               class="inline-flex items-center justify-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700 mt-7"
             >
@@ -77,7 +80,7 @@ const MainFooter = () => {
                 <li key={item.id}>
                   <Link
                     className="flex text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
-                    style={{ textTransform: "capitalize" }}
+                    style={{ textTransform: 'capitalize' }}
                     to={`/category/${item.name}`}
                   >
                     {item.name}
@@ -93,16 +96,16 @@ const MainFooter = () => {
             <ul class="mt-6 space-y-2">
               <li>
                 <a
-                  href="tel:+8801851003265"
+                  href="tel:+8801856113876"
                   target="_blank"
                   class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
-                  <FaPhoneAlt /> +880 1851003265
+                  <FaPhoneAlt /> +880 1856113876
                 </a>
               </li>
               <li>
                 <a
-                  href="https://web.facebook.com/vai.dam.koto"
+                  href="https://www.facebook.com/theaccesoriesmart"
                   target="_blank"
                   class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
@@ -111,20 +114,31 @@ const MainFooter = () => {
               </li>
               <li>
                 <a
-                  href="https://wa.me/+8801851003265"
+                  href="https://wa.me/+8801856113876"
                   target="_blank"
                   class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
-                  {" "}
+                  {' '}
                   <IoLogoWhatsapp className="text-green-600" size={15} />
-                  WhatsApp{" "}
+                  WhatsApp{' '}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:support@theaccessoriesmart.com"
+                  target="_blank"
+                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                >
+                  {' '}
+                  <FaEnvelope size={15} />
+                  support@theaccessoriesmart.com{' '}
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div class="lg:col-span-2 lg:-mt-16 mt-10">
+        <div class="lg:col-span-2 lg:-mt-8 mt-10">
           <ul class="flex justify-center lg:justify-end items-stretch gap-6 ">
             <li className="border-1 border-gray-300 bg-white cursor-pointer rounded flex justify-between items-start p-1">
               <img src={bkash} className="w-10 h-8" alt="" />
@@ -143,17 +157,18 @@ const MainFooter = () => {
             </li>
           </ul>
         </div>
+
         <hr class="mt-16 mb-10 border-gray-200" />
 
         <div class="sm:flex sm:items-center justify-center">
           <p class="text-sm text-gray-300">
-            © Copyright 2021, All Rights Reserved by Vai Dam Koto
+            © Copyright 2021, All Rights Reserved by Accessories Mart
           </p>
         </div>
       </div>
       <div className="fixed bottom-4 right-4 z-50">
-        <Link to={"https://wa.me/+8801851003265"} target="_blank">
-          {" "}
+        <Link to={'https://wa.me/+8801856113876'} target="_blank">
+          {' '}
           <img src={whatsapp} className="w-18" alt="" />
         </Link>
       </div>
