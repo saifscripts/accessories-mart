@@ -36,15 +36,15 @@ const MainFooter = () => {
   }, []);
 
   return (
-    <section class="py-10 bg-black sm:pt-16 lg:pt-16 mt-20">
-      <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-y-12 gap-x-8 xl:gap-x-12">
-          <div class="col-span-2 md:col-span-4 xl:pr-8">
+    <section className="py-10 bg-black sm:pt-16 lg:pt-16 mt-20">
+      <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-y-12 gap-x-8 xl:gap-x-12">
+          <div className="col-span-2 md:col-span-4 xl:pr-8">
             <Link to="/">
-              <img class="w-auto h-14" src="/logo.png" alt="" />
+              <img className="w-auto h-14" src="/logo.png" alt="" />
             </Link>
 
-            <p class="text-base leading-relaxed text-gray-200 mt-7">
+            <p className="text-base leading-relaxed text-gray-200 mt-7">
               Discover the latest tech at Gadgetex – your one-stop shop for
               innovative gadgets and accessories. Shop smart, stay ahead.
             </p>
@@ -52,10 +52,10 @@ const MainFooter = () => {
             <Link
               to="https://web.facebook.com/messages/t/100857032923823/"
               target="_blank"
-              class="inline-flex items-center justify-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700 mt-7"
+              className="inline-flex items-center justify-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700 mt-7"
             >
               <svg
-                class="w-6 h-6"
+                className="w-6 h-6"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -72,10 +72,10 @@ const MainFooter = () => {
             </Link>
           </div>
 
-          <div class="lg:col-span-2">
-            <p class="text-md font-semibold text-gray-100">Categories</p>
+          <div className="lg:col-span-2">
+            <p className="text-md font-semibold text-gray-100">Categories</p>
 
-            <ul class="mt-6 space-y-2">
+            <ul className="mt-6 space-y-2">
               {data[0]?.slice(0, 5).map((item) => (
                 <li key={item.id}>
                   <Link
@@ -90,15 +90,15 @@ const MainFooter = () => {
             </ul>
           </div>
 
-          <div class="lg:col-span-2">
-            <p class="text-md font-semibold text-gray-100">Contact</p>
+          <div className="lg:col-span-2">
+            <p className="text-md font-semibold text-gray-100">Contact</p>
 
-            <ul class="mt-6 space-y-2">
+            <ul className="mt-6 space-y-2">
               <li>
                 <a
                   href="tel:+8801856113876"
                   target="_blank"
-                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                  className="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
                   <FaPhoneAlt /> +880 1856113876
                 </a>
@@ -107,7 +107,7 @@ const MainFooter = () => {
                 <a
                   href="https://www.facebook.com/theaccesoriesmart"
                   target="_blank"
-                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                  className="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
                   <FaFacebookF className="text-blue-600" size={15} /> Facebook
                 </a>
@@ -116,7 +116,7 @@ const MainFooter = () => {
                 <a
                   href="https://wa.me/+8801856113876"
                   target="_blank"
-                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                  className="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
                   {' '}
                   <IoLogoWhatsapp className="text-green-600" size={15} />
@@ -127,7 +127,7 @@ const MainFooter = () => {
                 <a
                   href="mailto:support@theaccessoriesmart.com"
                   target="_blank"
-                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                  className="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
                   {' '}
                   <FaEnvelope size={15} />
@@ -138,8 +138,8 @@ const MainFooter = () => {
           </div>
         </div>
 
-        <div class="lg:col-span-2 lg:-mt-8 mt-10">
-          <ul class="flex justify-center lg:justify-end items-stretch gap-6 ">
+        <div className="lg:col-span-2 lg:-mt-8 mt-10">
+          <ul className="flex justify-center lg:justify-end items-stretch gap-6 ">
             <li className="border-1 border-gray-300 bg-white cursor-pointer rounded flex justify-between items-start p-1">
               <img src={bkash} className="w-10 h-8" alt="" />
             </li>
@@ -158,10 +158,10 @@ const MainFooter = () => {
           </ul>
         </div>
 
-        <hr class="mt-16 mb-10 border-gray-200" />
+        <hr className="mt-16 mb-10 border-gray-200" />
 
-        <div class="sm:flex sm:items-center justify-center">
-          <p class="text-sm text-gray-300">
+        <div className="sm:flex sm:items-center justify-center">
+          <p className="text-sm text-gray-300">
             © Copyright 2021, All Rights Reserved by Accessories Mart
           </p>
         </div>

@@ -129,56 +129,60 @@ const OrderDtails = () => {
   };
 
   return (
-    <section class="bg-white py-8 antialiased md:py-8">
-      <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
-        <h2 class="mb-4 text-xl font-semibold text-gray-900  sm:text-2xl md:mb-6">
+    <section className="bg-white py-8 antialiased md:py-8">
+      <div className="mx-auto max-w-screen-lg px-4 2xl:px-0">
+        <h2 className="mb-4 text-xl font-semibold text-gray-900  sm:text-2xl md:mb-6">
           Order overview
         </h2>
 
         <div>
-          <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 ">
-            <h3 class="mb-4 text-xl font-semibold text-gray-900 ">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ">
+            <h3 className="mb-4 text-xl font-semibold text-gray-900 ">
               {orderData?.length === 0
                 ? 'No Products Found'
                 : 'Orderd Products'}
             </h3>
-            <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 ">
-              <dl class="w-1/2  lg:w-1/10  hidden lg:block">
-                <dt class="text-base font-medium text-gray-500 ">Image</dt>
+            <div className="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 ">
+              <dl className="w-1/2  lg:w-1/10  hidden lg:block">
+                <dt className="text-base font-medium text-gray-500 ">Image</dt>
               </dl>
-              <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto mr-6 hidden lg:block">
-                <dt class="text-base font-medium text-gray-500 ">
+              <dl className="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto mr-6 hidden lg:block">
+                <dt className="text-base font-medium text-gray-500 ">
                   Product Name:
                 </dt>
               </dl>
 
-              <dl class="w-1/2  lg:w-1/10 hidden lg:block">
-                <dt class="text-base font-medium text-gray-500 ">Color</dt>
+              <dl className="w-1/2  lg:w-1/10 hidden lg:block">
+                <dt className="text-base font-medium text-gray-500 ">Color</dt>
               </dl>
-              <dl class="w-1/2  lg:w-1/10 hidden lg:block">
-                <dt class="text-base font-medium text-gray-500 ">Category</dt>
-              </dl>
-
-              <dl class="w-1/2  lg:w-1/10 hidden lg:block">
-                <dt class="text-base font-medium text-gray-500 ">Price </dt>
+              <dl className="w-1/2  lg:w-1/10 hidden lg:block">
+                <dt className="text-base font-medium text-gray-500 ">
+                  Category
+                </dt>
               </dl>
 
-              <dl class="w-1/2  lg:w-1/10 hidden lg:block">
-                <dt class="text-base font-medium text-gray-500 ">Quantity</dt>
+              <dl className="w-1/2  lg:w-1/10 hidden lg:block">
+                <dt className="text-base font-medium text-gray-500 ">Price </dt>
+              </dl>
+
+              <dl className="w-1/2  lg:w-1/10 hidden lg:block">
+                <dt className="text-base font-medium text-gray-500 ">
+                  Quantity
+                </dt>
               </dl>
             </div>
             {orderData.cart.map((product, i) => (
               <div
                 key={i}
-                class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 "
+                className="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 "
               >
-                <dl class="w-1/2  lg:w-1/10">
-                  <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
+                <dl className="w-1/2  lg:w-1/10">
+                  <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
                     <Link
                       to={`/product/${product.id}/${formatUrl(
                         product.product_name
                       )}`}
-                      class="hover:underline"
+                      className="hover:underline"
                     >
                       <img
                         src={`${IMAGE_URL}/admin/product/${product.product_image}`}
@@ -188,16 +192,18 @@ const OrderDtails = () => {
                     </Link>
                   </dd>
                 </dl>
-                <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto mr-6">
-                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                    <dt class="text-base font-medium text-gray-500 ">Name</dt>
+                <dl className="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto mr-6">
+                  <dl className="w-1/2  lg:w-1/10 lg:hidden block">
+                    <dt className="text-base font-medium text-gray-500 ">
+                      Name
+                    </dt>
                   </dl>
-                  <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
+                  <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
                     <Link
                       to={`/product/${product.id}/${formatUrl(
                         product.product_name
                       )}`}
-                      class="hover:underline"
+                      className="hover:underline"
                     >
                       {product?.product_name}
                     </Link>
@@ -205,13 +211,13 @@ const OrderDtails = () => {
                 </dl>
 
                 {product?.selectedColor && (
-                  <dl class="w-1/2  lg:w-1/10">
-                    <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                      <dt class="text-base font-medium text-gray-500 ">
+                  <dl className="w-1/2  lg:w-1/10">
+                    <dl className="w-1/2  lg:w-1/10 lg:hidden block">
+                      <dt className="text-base font-medium text-gray-500 ">
                         Selected Color
                       </dt>
                     </dl>
-                    <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
+                    <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
                       {/* {product?.selectedColor} */}
                       <div
                         className={` w-8 h-8 border border-gray-200 rounded hover:shadow-sm cursor-pointer`}
@@ -221,33 +227,35 @@ const OrderDtails = () => {
                   </dl>
                 )}
 
-                <dl class="w-1/2  lg:w-1/10">
-                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                    <dt class="text-base font-medium text-gray-500 ">
+                <dl className="w-1/2  lg:w-1/10">
+                  <dl className="w-1/2  lg:w-1/10 lg:hidden block">
+                    <dt className="text-base font-medium text-gray-500 ">
                       Category
                     </dt>
                   </dl>
-                  <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
+                  <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
                     {product?.select_category}
                   </dd>
                 </dl>
 
-                <dl class="w-1/2  lg:w-1/10">
-                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                    <dt class="text-base font-medium text-gray-500 ">Price</dt>
+                <dl className="w-1/2  lg:w-1/10">
+                  <dl className="w-1/2  lg:w-1/10 lg:hidden block">
+                    <dt className="text-base font-medium text-gray-500 ">
+                      Price
+                    </dt>
                   </dl>
-                  <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
+                  <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
                     ৳ {product?.selling_price}
                   </dd>
                 </dl>
 
-                <dl class="w-1/2  lg:w-1/10">
-                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                    <dt class="text-base font-medium text-gray-500 ">
+                <dl className="w-1/2  lg:w-1/10">
+                  <dl className="w-1/2  lg:w-1/10 lg:hidden block">
+                    <dt className="text-base font-medium text-gray-500 ">
                       Quantity
                     </dt>
                   </dl>
-                  <dd class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded text-base px-2.5 py-0.5  font-medium text-gray-900">
+                  <dd className="me-2 mt-1.5 inline-flex shrink-0 items-center rounded text-base px-2.5 py-0.5  font-medium text-gray-900">
                     {product?.quantity}
                   </dd>
                 </dl>

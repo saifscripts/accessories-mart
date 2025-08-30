@@ -32,14 +32,14 @@ const Hero = () => {
       </div>
 
       {/* Category */}
-      <section class="bg-[#00A651] antialiased py-10   md:py-16 hidden">
-        <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <div class="mb-4 flex items-center justify-between gap-4 md:mb-8">
-            <h2 class="text-xl font-semibold text-white  sm:text-2xl">
+      <section className="bg-[#00A651] antialiased py-10   md:py-16 hidden">
+        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+          <div className="mb-4 flex items-center justify-between gap-4 md:mb-8">
+            <h2 className="text-xl font-semibold text-white  sm:text-2xl">
               Shop by category
             </h2>
           </div>
-          <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {loading ? (
               // Loading skeleton for category items
               <>
@@ -56,9 +56,9 @@ const Hero = () => {
                     <>
                       <Link
                         to={`/category/${item.name}`}
-                        class="flex items-center rounded-md text-center  bg-[#00A651] border-1  px-4 py-2 hover:bg-[#00a62c]  border-white "
+                        className="flex items-center rounded-md text-center  bg-[#00A651] border-1  px-4 py-2 hover:bg-[#00a62c]  border-white "
                       >
-                        <span class="text-sm font-medium text-white  text-center w-full">
+                        <span className="text-sm font-medium text-white  text-center w-full">
                           {item.name.toUpperCase()}
                         </span>
                       </Link>

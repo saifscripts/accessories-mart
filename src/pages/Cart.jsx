@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from "react";
-import { CartContext } from "../context/CartContext";
-import { Link } from "react-router-dom";
-import Alert from "../components/Alert";
-import { FaPlus } from "react-icons/fa";
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Alert from '../components/Alert';
+import { CartContext } from '../context/CartContext';
 // import ReactPixel from 'react-facebook-pixel';
 const Cart = () => {
-
   const {
     cart,
     totalPrice,
@@ -16,13 +14,8 @@ const Cart = () => {
   } = useContext(CartContext);
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
 
-
-
   useEffect(() => {
-
-
     // if (cart.length > 0) {
-
 
     //   ReactPixel.track('InitiateCheckout', {
     //     content_ids: cart.map(item => item.id),
@@ -38,7 +31,6 @@ const Cart = () => {
     //   });
 
     // }
-
 
     // Meta Pixel ViewCart
     /* ReactPixel.track('ViewCart', {
@@ -56,30 +48,20 @@ const Cart = () => {
 
     // Google Analytics view_cart
     window.dataLayer.push({
-      event: "view_cart",
+      event: 'view_cart',
       ecommerce: {
-        items: cart.map(item => ({
+        items: cart.map((item) => ({
           item_id: item.id,
           item_name: item.product_name,
           price: item.selling_price,
           item_category: item.select_category,
-          quantity: item.quantity
+          quantity: item.quantity,
         })),
         value: totalPrice,
-        currency: "BDT"
-      }
+        currency: 'BDT',
+      },
     });
-
-
-
-
-
   }, [cart]);
-
-
-
-
-
 
   // console.log(cart);
   return (
@@ -145,7 +127,7 @@ const Cart = () => {
                             type="button"
                             className="cursor-pointer inline-flex h-5 w-5 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100"
                           >
-                            {" "}
+                            {' '}
                             +
                           </button>
                         </div>
@@ -162,7 +144,7 @@ const Cart = () => {
                           className="text-base font-medium text-gray-900 hover:underline"
                         >
                           {item.product_name}
-                        </a>{" "}
+                        </a>{' '}
                         <br />
                         <button
                           onClick={() => removeFromCart(item.id)}
@@ -170,7 +152,7 @@ const Cart = () => {
                           className="cursor-pointer mt-2 inline-flex items-center text-sm font-medium text-red-600 hover:underline"
                         >
                           <svg
-                            class="me-1.5 h-5 w-5"
+                            className="me-1.5 h-5 w-5"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -215,8 +197,8 @@ const Cart = () => {
                 </Link>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-sm font-normal text-gray-500">
-                    {" "}
-                    or{" "}
+                    {' '}
+                    or{' '}
                   </span>
                   <Link
                     to="/"
