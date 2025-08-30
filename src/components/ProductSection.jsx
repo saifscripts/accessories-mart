@@ -1,46 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from "react";
-import { CartContext } from "../context/CartContext";
-import Loader from "./Loader";
-import { Link, useOutletContext } from "react-router-dom";
-import { X } from "lucide-react";
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useOutletContext } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 const ProductSection = ({ loading, data, className }) => {
   const { isCartOpen, setIsCartOpen } = useOutletContext();
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
   const [cartItems, setCartItems] = useState(new Set());
-  const {
-    addToCart,
-    orderNow,
-    cart,
-  } = useContext(CartContext);
+  const { addToCart, orderNow, cart } = useContext(CartContext);
   const [selectedColors, setSelectedColors] = useState({});
   const [quantities, setQuantities] = useState({});
 
   /* Color handling functions */
   const getColorCode = (colorName) => {
     const colorMap = {
-      yellow: "#FFFF00",
-      blue: "#0000FF",
-      gray: "#808080",
-      red: "#FF0000",
-      green: "#008000",
-      black: "#000000",
-      white: "#FFFFFF",
-      orange: "#FFA500",
-      purple: "#800080",
-      pink: "#FFC0CB",
-      brown: "#A52A2A",
+      yellow: '#FFFF00',
+      blue: '#0000FF',
+      gray: '#808080',
+      red: '#FF0000',
+      green: '#008000',
+      black: '#000000',
+      white: '#FFFFFF',
+      orange: '#FFA500',
+      purple: '#800080',
+      pink: '#FFC0CB',
+      brown: '#A52A2A',
     };
     const normalizedColor = colorName?.toLowerCase().trim();
-    return colorMap[normalizedColor] || "#CCCCCC";
+    return colorMap[normalizedColor] || '#CCCCCC';
   };
 
   // Process colors for each product
   const processProductColors = (product) => {
     if (!product.color) return [];
-    return product.color.split(",").map((color) => ({
+    return product.color.split(',').map((color) => ({
       name: color.trim(),
       code: getColorCode(color.trim()),
     }));
@@ -72,10 +66,10 @@ const ProductSection = ({ loading, data, className }) => {
 
     // Update quantities from cart
     const newQuantities = {};
-    cart.forEach(item => {
+    cart.forEach((item) => {
       newQuantities[item.id] = item.quantity;
     });
-    setQuantities(prev => ({ ...prev, ...newQuantities }));
+    setQuantities((prev) => ({ ...prev, ...newQuantities }));
   }, [cart]);
 
   // Handle color selection
@@ -100,7 +94,6 @@ const ProductSection = ({ loading, data, className }) => {
         }
       });
     } */
-
 
   // Enhanced cart handlers with color validation
   /*   const handleAddToCart = (item) => {
@@ -147,7 +140,48 @@ const ProductSection = ({ loading, data, className }) => {
         className={`grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 lg:gap-4 lg:px-10 ${className}`}
       >
         {loading ? (
-          <Loader />
+          // Custom loading skeleton for product cards
+          <>
+            {[...Array(10)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-white border-1 border-gray-100 p-2 rounded-lg shadow-lg"
+              >
+                {/* Product image skeleton */}
+                <div className="w-full lg:h-40 h-36 bg-gray-300 rounded-lg animate-pulse"></div>
+
+                {/* Product name skeleton */}
+                <div className="h-6 bg-gray-300 rounded mt-4 animate-pulse"></div>
+
+                {/* Category skeleton */}
+                <div className="h-4 bg-gray-300 rounded mt-1 w-3/4 animate-pulse"></div>
+
+                {/* Price skeleton */}
+                <div className="mt-2 space-y-1">
+                  <div className="h-5 bg-gray-300 rounded w-1/2 animate-pulse"></div>
+                  <div className="h-5 bg-gray-300 rounded w-1/3 animate-pulse"></div>
+                </div>
+
+                {/* Color selection skeleton */}
+                <div className="mt-2">
+                  <div className="flex gap-1 flex-wrap">
+                    {[...Array(4)].map((_, colorIndex) => (
+                      <div
+                        key={colorIndex}
+                        className="w-6 h-6 bg-gray-300 rounded animate-pulse"
+                      ></div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Button skeletons */}
+                <div className="mt-3 flex flex-col gap-2">
+                  <div className="h-10 bg-gray-300 rounded animate-pulse"></div>
+                  <div className="h-10 bg-gray-300 rounded animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </>
         ) : (
           <>
             {data?.map((item) => {
@@ -161,26 +195,35 @@ const ProductSection = ({ loading, data, className }) => {
                   key={item.id}
                   className="bg-white border-1 border-gray-100 p-2 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-100"
                 >
-                  <Link to={`/product/${item.id}/${formatUrl(item.product_name)}`}>
+                  <Link
+                    to={`/product/${item.id}/${formatUrl(item.product_name)}`}
+                  >
                     <img
                       className="w-full lg:h-40 h-36 rounded-lg object-cover"
                       src={
                         item.product_image
                           ? `${IMAGE_URL}/admin/product/${item.product_image}`
-                          : "https://adaptcommunitynetwork.org/wp-content/uploads/2022/01/ef3-placeholder-image.jpg"
+                          : 'https://adaptcommunitynetwork.org/wp-content/uploads/2022/01/ef3-placeholder-image.jpg'
                       }
                       alt={item.product_name}
                     />
                   </Link>
 
-                  <Link to={`/product/${item.id}/${formatUrl(item.product_name)}`}>
+                  <Link
+                    to={`/product/${item.id}/${formatUrl(item.product_name)}`}
+                  >
                     <h3 className="text-lg font-semibold text-gray-800 mt-4">
-                      {item.product_name?.substring(0, 27) || "No Name Available"}
+                      {item.product_name?.substring(0, 27) ||
+                        'No Name Available'}
                     </h3>
                   </Link>
-                  <p className="text-sm text-gray-600 mt-1">{item.select_category}</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {item.select_category}
+                  </p>
                   <p className="text-xl font-semibold text-gray-900 mt-2">
-                    <span className="line-through mr-4 text-red-500">৳ {item.regular_price}</span>{" "}
+                    <span className="line-through mr-4 text-red-500">
+                      ৳ {item.regular_price}
+                    </span>{' '}
                     <span>৳{item.selling_price}</span>
                   </p>
 
@@ -191,11 +234,14 @@ const ProductSection = ({ loading, data, className }) => {
                         {colors?.map((color, index) => (
                           <button
                             key={index}
-                            onClick={() => handleColorSelect(item.id, color.code)}
-                            className={`w-6 h-6 rounded border-2 cursor-pointer ${selectedColors[item.id] === color.code
-                              ? "border-gray-400"
-                              : "border-gray-300"
-                              }`}
+                            onClick={() =>
+                              handleColorSelect(item.id, color.code)
+                            }
+                            className={`w-6 h-6 rounded border-2 cursor-pointer ${
+                              selectedColors[item.id] === color.code
+                                ? 'border-gray-400'
+                                : 'border-gray-300'
+                            }`}
                             style={{ backgroundColor: color.code }}
                             title={color.name}
                           />
@@ -203,8 +249,6 @@ const ProductSection = ({ loading, data, className }) => {
                       </div>
                     </div>
                   )}
-
-
 
                   <div className="mt-3 flex flex-col gap-2 items-stretch">
                     {isInCart ? (
@@ -218,7 +262,10 @@ const ProductSection = ({ loading, data, className }) => {
                       </div>
                     ) : (
                       <button
-                        onClick={() => { addToCart(item, selectedColors[item.id]); setIsCartOpen(!isCartOpen) }}
+                        onClick={() => {
+                          addToCart(item, selectedColors[item.id]);
+                          setIsCartOpen(!isCartOpen);
+                        }}
                         className="bg-black text-white font-bold py-2 px-4 rounded-md hover:bg-[#313131] hover:text-white transition duration-300 cursor-pointer text-center"
                       >
                         কার্টে রাখুন
@@ -243,6 +290,3 @@ const ProductSection = ({ loading, data, className }) => {
 };
 
 export default ProductSection;
-
-
-

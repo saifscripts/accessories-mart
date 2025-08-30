@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Loader from "../components/Loader";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 const OrderDtails = () => {
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,13 +10,13 @@ const OrderDtails = () => {
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
         setGetUser(parsedUser.user);
       } catch (error) {
-        console.error("Error parsing user data:", error);
+        console.error('Error parsing user data:', error);
       }
     }
   }, []);
@@ -26,14 +25,14 @@ const OrderDtails = () => {
     if (!getUser?.uid) return; // Prevent fetching with invalid user
     try {
       const response = await fetch(`${BASE_URL}/order/${getUser.uid}`);
-      if (!response.ok) throw new Error("Failed to fetch");
+      if (!response.ok) throw new Error('Failed to fetch');
       const result = await response.json();
 
       // Find the specific order by order_id
       const specificOrder = result.data.find((order) => order.order_id === id);
       setOrderData(specificOrder || null); // Set the specific order or null if not found
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
@@ -44,8 +43,10 @@ const OrderDtails = () => {
       loadData();
     } else {
       // For guest users, get the specific order from localStorage using the order ID
-      const guestOrders = JSON.parse(localStorage.getItem("guestOrders")) || [];
-      const specificGuestOrder = guestOrders.find(order => order.order_id === id);
+      const guestOrders = JSON.parse(localStorage.getItem('guestOrders')) || [];
+      const specificGuestOrder = guestOrders.find(
+        (order) => order.order_id === id
+      );
 
       if (specificGuestOrder) {
         setOrderData(specificGuestOrder);
@@ -57,11 +58,65 @@ const OrderDtails = () => {
   }, [getUser, BASE_URL, id]);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <section className="bg-white py-8 antialiased md:py-8">
+        <div className="mx-auto max-w-screen-lg px-4 2xl:px-0">
+          {/* Header skeleton */}
+          <div className="h-8 bg-gray-300 rounded mb-4 animate-pulse"></div>
+
+          {/* Order container skeleton */}
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+            {/* Order title skeleton */}
+            <div className="h-6 bg-gray-300 rounded mb-4 animate-pulse"></div>
+
+            {/* Table header skeleton */}
+            <div className="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="w-1/6">
+                  <div className="h-5 bg-gray-300 rounded animate-pulse"></div>
+                </div>
+              ))}
+            </div>
+
+            {/* Product rows skeleton */}
+            {[...Array(3)].map((_, rowIndex) => (
+              <div
+                key={rowIndex}
+                className="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 pt-4"
+              >
+                {[...Array(6)].map((_, colIndex) => (
+                  <div key={colIndex} className="w-1/6">
+                    {colIndex === 0 ? (
+                      <div className="w-8 h-8 bg-gray-300 rounded animate-pulse"></div>
+                    ) : (
+                      <div className="h-5 bg-gray-300 rounded animate-pulse"></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
 
   if (!orderData) {
-    return <Loader />;
+    return (
+      <section className="bg-white py-8 antialiased md:py-8">
+        <div className="mx-auto max-w-screen-lg px-4 2xl:px-0">
+          {/* Header skeleton */}
+          <div className="h-8 bg-gray-300 rounded mb-4 animate-pulse"></div>
+
+          {/* No order found skeleton */}
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
+            <div className="h-12 bg-gray-300 rounded mb-4 animate-pulse mx-auto w-1/3"></div>
+            <div className="h-6 bg-gray-300 rounded mb-2 animate-pulse mx-auto w-1/2"></div>
+            <div className="h-4 bg-gray-300 rounded animate-pulse mx-auto w-2/3"></div>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   const formatUrl = (str) => {
@@ -72,9 +127,6 @@ const OrderDtails = () => {
       .replace(/[^a-zA-Z0-9-]/g, '') // Remove special characters
       .toLowerCase();
   };
-
-  console.log(orderData);
-
 
   return (
     <section class="bg-white py-8 antialiased md:py-8">
@@ -87,8 +139,8 @@ const OrderDtails = () => {
           <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 ">
             <h3 class="mb-4 text-xl font-semibold text-gray-900 ">
               {orderData?.length === 0
-                ? "No Products Found"
-                : "Orderd Products"}
+                ? 'No Products Found'
+                : 'Orderd Products'}
             </h3>
             <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 ">
               <dl class="w-1/2  lg:w-1/10  hidden lg:block">
@@ -99,7 +151,6 @@ const OrderDtails = () => {
                   Product Name:
                 </dt>
               </dl>
-              
 
               <dl class="w-1/2  lg:w-1/10 hidden lg:block">
                 <dt class="text-base font-medium text-gray-500 ">Color</dt>
@@ -122,9 +173,13 @@ const OrderDtails = () => {
                 class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 "
               >
                 <dl class="w-1/2  lg:w-1/10">
-
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                    <Link to={`/product/${product.id}/${formatUrl(product.product_name)}`} class="hover:underline">
+                    <Link
+                      to={`/product/${product.id}/${formatUrl(
+                        product.product_name
+                      )}`}
+                      class="hover:underline"
+                    >
                       <img
                         src={`${IMAGE_URL}/admin/product/${product.product_image}`}
                         className="w-8 h-8"
@@ -138,33 +193,39 @@ const OrderDtails = () => {
                     <dt class="text-base font-medium text-gray-500 ">Name</dt>
                   </dl>
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                    <Link to={`/product/${product.id}/${formatUrl(product.product_name)}`} class="hover:underline">
+                    <Link
+                      to={`/product/${product.id}/${formatUrl(
+                        product.product_name
+                      )}`}
+                      class="hover:underline"
+                    >
                       {product?.product_name}
                     </Link>
                   </dd>
                 </dl>
 
-                {product?.selectedColor &&
-
+                {product?.selectedColor && (
                   <dl class="w-1/2  lg:w-1/10">
                     <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                      <dt class="text-base font-medium text-gray-500 ">Selected Color</dt>
+                      <dt class="text-base font-medium text-gray-500 ">
+                        Selected Color
+                      </dt>
                     </dl>
                     <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
                       {/* {product?.selectedColor} */}
                       <div
-                          className={` w-8 h-8 border border-gray-200 rounded hover:shadow-sm cursor-pointer`}
-                          style={{ backgroundColor: product.selectedColor }}
-                        ></div>
+                        className={` w-8 h-8 border border-gray-200 rounded hover:shadow-sm cursor-pointer`}
+                        style={{ backgroundColor: product.selectedColor }}
+                      ></div>
                     </dd>
                   </dl>
-
-                }
-
+                )}
 
                 <dl class="w-1/2  lg:w-1/10">
                   <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                    <dt class="text-base font-medium text-gray-500 ">Category</dt>
+                    <dt class="text-base font-medium text-gray-500 ">
+                      Category
+                    </dt>
                   </dl>
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
                     {product?.select_category}
@@ -182,7 +243,9 @@ const OrderDtails = () => {
 
                 <dl class="w-1/2  lg:w-1/10">
                   <dl class="w-1/2  lg:w-1/10 lg:hidden block">
-                    <dt class="text-base font-medium text-gray-500 ">Quantity</dt>
+                    <dt class="text-base font-medium text-gray-500 ">
+                      Quantity
+                    </dt>
                   </dl>
                   <dd class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded text-base px-2.5 py-0.5  font-medium text-gray-900">
                     {product?.quantity}

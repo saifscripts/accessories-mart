@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
-import Loader from './Loader';
 
 const Header = ({ menuopen, setMenuOpen }) => {
   const { cart, user } = useContext(CartContext);
@@ -82,10 +81,6 @@ const Header = ({ menuopen, setMenuOpen }) => {
     // If subCategories[categoryName] is an empty array, let the link work normally
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <div
       className="fixed top-0 z-50 w-full"
@@ -115,73 +110,86 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
               {/* Desktop Navigation */}
               <div className="hidden lg:flex lg:items-center lg:space-x-7">
-                <Link
-                  to="/"
-                  className="text-base font-medium text-white capitalize"
-                >
-                  Home
-                </Link>
-
-                {categories.map((category) => {
-                  const hasSubCategories =
-                    Array.isArray(subCategories[category.name]) &&
-                    subCategories[category.name].length > 0;
-                  const isHovered = hoveredCategory === category.name;
-
-                  return (
-                    <div
-                      key={category.id}
-                      className="relative group"
-                      onMouseEnter={() => handleCategoryHover(category.name)}
-                      onMouseLeave={() => setHoveredCategory(null)}
+                {loading ? (
+                  // Loading skeleton for desktop navigation
+                  <>
+                    {[...Array(6)].map((_, index) => (
+                      <div key={index} className="animate-pulse">
+                        <div className="h-6 bg-gray-600 rounded w-20"></div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/"
+                      className="text-base font-medium text-white capitalize"
                     >
-                      <Link
-                        to={`/category/${category.name}`}
-                        className="text-base font-medium text-white flex items-center capitalize"
-                      >
-                        {category.name}
-                        {(subCategories[category.name] === null ||
-                          hasSubCategories) && (
-                          <svg
-                            className="w-4 h-4 ml-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
+                      Home
+                    </Link>
+                    {categories.map((category) => {
+                      const hasSubCategories =
+                        Array.isArray(subCategories[category.name]) &&
+                        subCategories[category.name].length > 0;
+                      const isHovered = hoveredCategory === category.name;
+
+                      return (
+                        <div
+                          key={category.id}
+                          className="relative group"
+                          onMouseEnter={() =>
+                            handleCategoryHover(category.name)
+                          }
+                          onMouseLeave={() => setHoveredCategory(null)}
+                        >
+                          <Link
+                            to={`/category/${category.name}`}
+                            className="text-base font-medium text-white flex items-center capitalize"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        )}
-                      </Link>
+                            {category.name}
+                            {(subCategories[category.name] === null ||
+                              hasSubCategories) && (
+                              <svg
+                                className="w-4 h-4 ml-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M19 9l-7 7-7-7"
+                                />
+                              </svg>
+                            )}
+                          </Link>
 
-                      {isHovered && hasSubCategories && (
-                        <div className="absolute left-0 mt-0 w-48 bg-gray-900 rounded-md shadow-lg py-1 z-50">
-                          {subCategories[category.name].map((subCat) => (
-                            <Link
-                              key={subCat}
-                              to={`/sub-category/${category.name}/${subCat}`}
-                              className="block px-4 py-2 text-sm text-gray-100 hover:bg-gray-800 capitalize"
-                            >
-                              {subCat}
-                            </Link>
-                          ))}
+                          {isHovered && hasSubCategories && (
+                            <div className="absolute left-0 mt-0 w-48 bg-gray-900 rounded-md shadow-lg py-1 z-50">
+                              {subCategories[category.name].map((subCat) => (
+                                <Link
+                                  key={subCat}
+                                  to={`/sub-category/${category.name}/${subCat}`}
+                                  className="block px-4 py-2 text-sm text-gray-100 hover:bg-gray-800 capitalize"
+                                >
+                                  {subCat}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
-
-                <Link
-                  to="/shop"
-                  className="text-base font-medium text-white capitalize"
-                >
-                  Shop
-                </Link>
+                      );
+                    })}
+                    <Link
+                      to="/shop"
+                      className="text-base font-medium text-white capitalize"
+                    >
+                      Shop
+                    </Link>
+                  </>
+                )}
               </div>
 
               {/* Mobile Cart Button */}
@@ -332,76 +340,87 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
             <div className="mt-6">
               <div className="flex flex-col space-y-2">
-                <Link
-                  to="/"
-                  className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 capitalize"
-                >
-                  Home
-                </Link>
+                {loading ? (
+                  // Loading skeleton for mobile navigation
+                  <>
+                    {[...Array(6)].map((_, index) => (
+                      <div key={index} className="animate-pulse">
+                        <div className="h-6 bg-gray-600 rounded w-32 mb-2"></div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/"
+                      className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 capitalize"
+                    >
+                      Home
+                    </Link>
+                    {categories.map((category) => {
+                      const hasSubCategories =
+                        Array.isArray(subCategories[category.name]) &&
+                        subCategories[category.name].length > 0;
+                      const isExpanded =
+                        subCategories[category.name] !== null &&
+                        subCategories[category.name] !== undefined;
 
-                {categories.map((category) => {
-                  const hasSubCategories =
-                    Array.isArray(subCategories[category.name]) &&
-                    subCategories[category.name].length > 0;
-                  const isExpanded =
-                    subCategories[category.name] !== null &&
-                    subCategories[category.name] !== undefined;
-
-                  return (
-                    <div key={category.id}>
-                      <Link
-                        to={`/category/${category.name}`}
-                        className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 flex items-center justify-between capitalize"
-                        onClick={(e) =>
-                          handleMobileCategoryClick(e, category.name)
-                        }
-                      >
-                        {category.name}
-                        {(subCategories[category.name] === null ||
-                          hasSubCategories) && (
-                          <svg
-                            className={`w-4 h-4 text-white transition-transform ${
-                              isExpanded ? 'transform rotate-180' : ''
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
+                      return (
+                        <div key={category.id}>
+                          <Link
+                            to={`/category/${category.name}`}
+                            className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 flex items-center justify-between capitalize"
+                            onClick={(e) =>
+                              handleMobileCategoryClick(e, category.name)
+                            }
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        )}
-                      </Link>
+                            {category.name}
+                            {(subCategories[category.name] === null ||
+                              hasSubCategories) && (
+                              <svg
+                                className={`w-4 h-4 text-white transition-transform ${
+                                  isExpanded ? 'transform rotate-180' : ''
+                                }`}
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M19 9l-7 7-7-7"
+                                />
+                              </svg>
+                            )}
+                          </Link>
 
-                      {isExpanded && hasSubCategories && (
-                        <div className="ml-4">
-                          {subCategories[category.name].map((subCat) => (
-                            <Link
-                              key={subCat}
-                              to={`/sub-category/${category.name}/${subCat}`}
-                              className="block py-2 text-sm text-gray-100 hover:bg-gray-900 capitalize"
-                              onClick={() => setMenuOpen(false)}
-                            >
-                              {subCat}
-                            </Link>
-                          ))}
+                          {isExpanded && hasSubCategories && (
+                            <div className="ml-4">
+                              {subCategories[category.name].map((subCat) => (
+                                <Link
+                                  key={subCat}
+                                  to={`/sub-category/${category.name}/${subCat}`}
+                                  className="block py-2 text-sm text-gray-100 hover:bg-gray-900 capitalize"
+                                  onClick={() => setMenuOpen(false)}
+                                >
+                                  {subCat}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
-
-                <Link
-                  to="/shop"
-                  className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 capitalize"
-                >
-                  Shop
-                </Link>
+                      );
+                    })}
+                    <Link
+                      to="/shop"
+                      className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 capitalize"
+                    >
+                      Shop
+                    </Link>
+                  </>
+                )}
               </div>
 
               <hr className="my-4 border-gray-200" />
